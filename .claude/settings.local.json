@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import json; nb=json.load\\(open\\('3_decomposition.ipynb'\\)\\); [print\\(c['id'], '|', c['cell_type'], '|', c['source'][:60].replace\\(chr\\(10\\),' '\\)\\) for c in nb['cells']]\")",
+      "Bash(python -c \"import json; nb=json.load\\(open\\('3_decomposition.ipynb'\\)\\); [print\\(c['id'], '|', c['cell_type'], '|', ''.join\\(c['source']\\)[:70].replace\\(chr\\(10\\),' '\\)\\) for c in nb['cells']]\")",
+      "Bash(python -c \"import json; nb=json.load\\(open\\('3_decomposition.ipynb'\\)\\); print\\(nb['cells'][-1]['id']\\)\")"
     ]
   }
 }

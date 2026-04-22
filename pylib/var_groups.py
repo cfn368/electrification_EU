@@ -3,8 +3,8 @@
 # ========== ========== ========== ========== ==========
 # ========== 1. Structure of electrification data
 countries = [
-    'DK','SE','NO','DE','NL','ES','FR',
-    'UK', 'FI',
+    'DK','SE','NO','DE','NL','FR',
+    'FI',
     'EU27_2020',    # EU, 27 countries, 2020-
 ]
 
@@ -14,9 +14,9 @@ country_names = {
     'NO':        'Norge',
     'DE':        'Tyskland',
     'NL':        'Holland',
-    'ES':        'Spanien',
+    # 'ES':        'Spanien',
     'FR':        'Frankrig',
-    'UK':        'UK',
+    # 'UK':        'UK',
     'FI':        'Finland',
     'EU27_2020': 'EU-27 gns.',
 }
@@ -86,7 +86,7 @@ labels = {
     'FC_TRA_DNAVI_E': 'Indenrigssøfart',
     'FC_TRA_PIPE_E':  'Rørledninger',
     'FC_TRA_NSP_E':   'Transport – ikke specificeret',
-    'FC_OTH_CP_E':   'Handel og offentlige tjenester',
+    'FC_OTH_CP_E':   'Private og offentlige tjenester',
     'FC_OTH_HH_E':   'Husholdninger',
     'FC_OTH_AF_E':   'Landbrug og skovbrug',
     'FC_OTH_FISH_E': 'Fiskeri',

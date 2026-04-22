@@ -15,7 +15,7 @@ from scipy import stats
 from scipy.stats import gaussian_kde
 import statsmodels.formula.api as smf
 from pylib import var_groups
-from pylib.fetches import fetch, fetch_gva
+from pylib.fetches import fetch, fetch_gva, fetch_energy_weights
 
 try:
     import win32clipboard
@@ -39,5 +39,5 @@ __all__ = [
     "np", "pd", "plt", "mcolors", "MaxNLocator", "requests",
     "itertools", "Path", "Sequence",
     "Patch", "Line2D", "LinearSegmentedColormap",
-    "enable_autoreload", "var_groups", "fetch", "fetch_gva",
+    "enable_autoreload", "var_groups", "fetch", "fetch_gva", "fetch_energy_weights",
 ]

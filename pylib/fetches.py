@@ -7,6 +7,7 @@ _G = "http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic"
 
 _BASE_ELEC = "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/nrg_ind_re"
 _BASE_GVA  = "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/nama_10_a64"
+_BASE_ENW  = "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/nrg_bal_c"
 _GVA_COUNTRIES = [c for c in var_groups.countries if c != 'EU28']
 
 # H49 split equally across land transport subsectors; H50/H51 direct
@@ -83,5 +84,19 @@ def fetch_gva(countries=_GVA_COUNTRIES, freq='A', start='1995') -> pd.DataFrame:
     if extra_rows:
         df = pd.concat([df] + extra_rows, ignore_index=True)
 
+    df['label'] = df['nrg_bal'].map(var_groups.labels)
+    return df
+
+
+def fetch_energy_weights(sectors=None, countries=var_groups.countries, freq='A', start='1995') -> pd.DataFrame:
+    """Total final energy consumption by sector (TJ) — Eurostat nrg_bal_c.
+    Key order: freq.nrg_bal.siec.unit.geo  (siec=TOTAL, unit=TJ).
+    Defaults to var_groups.subs if sectors is None.
+    """
+    if sectors is None:
+        sectors = var_groups.subs
+    nrg_key = '+'.join(sectors) if isinstance(sectors, list) else sectors
+    key = f"{freq}.{nrg_key}.TOTAL.TJ.{'+'.join(countries)}"
+    df = _parse(requests.get(f"{_BASE_ENW}/{key}?startPeriod={start}"))
     df['label'] = df['nrg_bal'].map(var_groups.labels)
     return df
