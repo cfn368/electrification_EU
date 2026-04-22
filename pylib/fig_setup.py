@@ -1,43 +1,93 @@
 # nice figures (Danish æ/ø/å-safe)
 import matplotlib as mpl
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 from cycler import cycler
 
 BASE = 9
 
 mpl.rcParams.update({
-    # --- fonts (pick ONE reliable unicode serif first) ---
     "font.family": "serif",
     "font.serif": [
-        "DejaVu Serif",        # robust unicode incl. æ/ø/å
+        "DejaVu Serif",
         "TeX Gyre Pagella",
         "Palatino Linotype",
         "Book Antiqua",
         "URW Palladio L",
     ],
-    "font.sans-serif": ["DejaVu Sans"],  # fallback if something forces sans
+    "font.sans-serif": ["DejaVu Sans"],
     "mathtext.fontset": "dejavuserif",
     "mathtext.default": "regular",
-
-    # --- rendering: make sure unicode text is used ---
-    "text.usetex": False,        # MUST be False if you rely on unicode directly
+    "text.usetex": False,
     "axes.unicode_minus": False,
-
-    # --- PDF/SVG export: embed fonts so glyphs survive ---
-    "pdf.fonttype": 42,          # embed TrueType (keeps æ/ø/å)
+    "pdf.fonttype": 42,
     "ps.fonttype": 42,
-    "svg.fonttype": "none",      # keep text as text in SVG (not paths)
-
-    # colors (yours)
+    "svg.fonttype": "none",
     "axes.prop_cycle": cycler(color=["#FF0000", "#374151", "#003A8C"]),
 })
 
 mpl.rcParams.update({
-    "font.size": BASE,
-    "figure.titlesize": BASE + 9,
-    "axes.titlesize": BASE + 7,
-    "axes.labelsize": BASE + 7,
-    "xtick.labelsize": BASE + 6,
-    "ytick.labelsize": BASE + 3,
-    "legend.fontsize": BASE + 7,
+    "font.size":             BASE,
+    "figure.titlesize":      BASE + 9,
+    "axes.titlesize":        BASE + 7,
+    "axes.labelsize":        BASE + 7,
+    "xtick.labelsize":       BASE + 6,
+    "ytick.labelsize":       BASE + 3,
+    "legend.fontsize":       BASE + 7,
     "legend.title_fontsize": BASE + 7,
 })
+
+# ── Country styling ────────────────────────────────────────────────────────────
+
+PALETTE = {
+    "DK":        "#E04131",
+    "SE":        "#DE7626",
+    "NO":        "#18DBB1",
+    "DE":        "#6A7015",
+    "NL":        "#5E3F27",
+    "ES":        "#63110A",
+    "FR":        "#090BDF",
+    "UK":        "#34BA5B",
+    "FI":        "#7B81E0",
+    "EU27_2020": "#275C51",
+}
+
+STYLE = {geo: "--" if geo == "EU27_2020" else "-"  for geo in PALETTE}
+LW    = {geo: 2.2   if geo == "EU27_2020" else 1.6 for geo in PALETTE}
+
+# 20-color palette for sector charts: project colors + 10 complementary
+SEC_PALETTE = [
+    "#E04131", "#DE7626", "#18DBB1", "#6A7015", "#5E3F27",
+    "#63110A", "#090BDF", "#34BA5B", "#7B81E0", "#275C51",
+    "#F5C518", "#C084FC", "#FB7185", "#38BDF8", "#EBD87C",
+    "#4ADE80", "#FB923C", "#818CF8", "#A3E635", "#34D399",
+]
+
+
+# ── Shared helpers ─────────────────────────────────────────────────────────────
+
+def style_ax(ax, years, step=5):
+    """Grid, tight xlim, clean x ticks."""
+    ax.grid(linewidth=0.6, alpha=0.35)
+    ax.set_xlim(years.min(), years.max())
+    y0, y1 = int(years.min()), int(years.max())
+    ax.xaxis.set_major_locator(
+        mticker.FixedLocator(
+            range(y0 + (step - y0 % step) % step, y1 + 1, step)
+    ))
+
+
+def legend(ax, **kwargs):
+    """Framed, rounded-corner legend."""
+    return ax.legend(frameon=True, framealpha=0.95,
+                     edgecolor="0.5", fancybox=True, **kwargs)
+
+
+def country_handles(countries):
+    """Legend handles for a list of country codes."""
+    from pylib.var_groups import country_names
+    return [
+        plt.Line2D([0], [0], color=PALETTE[g], ls=STYLE[g], lw=LW[g],
+                   label=country_names.get(g, g))
+        for g in countries
+    ]

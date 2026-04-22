@@ -15,6 +15,7 @@ from scipy import stats
 from scipy.stats import gaussian_kde
 import statsmodels.formula.api as smf
 from pylib import var_groups
+from pylib.fetches import fetch, fetch_gva
 
 try:
     import win32clipboard
@@ -25,7 +26,6 @@ except ImportError:
 import itertools
 from pathlib import Path
 from typing import Sequence
-
 
 
 def enable_autoreload(mode: int = 2) -> None:
@@ -39,5 +39,5 @@ __all__ = [
     "np", "pd", "plt", "mcolors", "MaxNLocator", "requests",
     "itertools", "Path", "Sequence",
     "Patch", "Line2D", "LinearSegmentedColormap",
-    "enable_autoreload",'var_groups'
+    "enable_autoreload", "var_groups", "fetch", "fetch_gva",
 ]
