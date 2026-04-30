@@ -3,7 +3,9 @@
 # ========== ========== ========== ========== ==========
 # ========== 1. Structure of electrification data
 countries = [
-    'DK','SE','NO','DE','NL','FR',
+    'DK','SE',
+    # 'NO',
+    'DE','NL','FR',
     'FI',
     'EU27_2020',    # EU, 27 countries, 2020-
 ]
@@ -11,7 +13,7 @@ countries = [
 country_names = {
     'DK':        'Danmark',
     'SE':        'Sverige',
-    'NO':        'Norge',
+    # 'NO':        'Norge',
     'DE':        'Tyskland',
     'NL':        'Holland',
     # 'ES':        'Spanien',

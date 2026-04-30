@@ -100,3 +100,17 @@ def fetch_energy_weights(sectors=None, countries=var_groups.countries, freq='A',
     df = _parse(requests.get(f"{_BASE_ENW}/{key}?startPeriod={start}"))
     df['label'] = df['nrg_bal'].map(var_groups.labels)
     return df
+
+
+def fetch_elec_consumption(sectors=None, countries=var_groups.countries, freq='A', start='1995') -> pd.DataFrame:
+    """Electricity consumption by sector (TJ) — Eurostat nrg_bal_c.
+    Key order: freq.nrg_bal.siec.unit.geo  (siec=E7000, unit=TJ).
+    Defaults to var_groups.subs if sectors is None.
+    """
+    if sectors is None:
+        sectors = var_groups.subs
+    nrg_key = '+'.join(sectors) if isinstance(sectors, list) else sectors
+    key = f"{freq}.{nrg_key}.E7000.TJ.{'+'.join(countries)}"
+    df = _parse(requests.get(f"{_BASE_ENW}/{key}?startPeriod={start}"))
+    df['label'] = df['nrg_bal'].map(var_groups.labels)
+    return df
