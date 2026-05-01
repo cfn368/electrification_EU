@@ -12,7 +12,7 @@ Analysis quantifying how much of the difference in electrification rates across 
 | [Eurostat `nrg_bal_c`](https://ec.europa.eu/eurostat/databrowser/view/nrg_bal_c) | Total energy consumption (TJ) by sector — decomposition weights | Live API via SDMX 2.1 (`fetch_energy_weights()`) |
 | [Eurostat `nrg_bal_c`](https://ec.europa.eu/eurostat/databrowser/view/nrg_bal_c) | Electricity consumption (TJ) by sector | Live API via SDMX 2.1 (`fetch_elec_consumption()`) |
 
-Active countries: **DK, SE, DE, NL, FR, FI, EU27_2020**. UK excluded (poor data quality); ES excluded (not available in energy balance dataset).
+Active countries: **DK, SE, DE, NL, FR, FI, EU27_2020**.
 
 Processed data is cached in `0_intermediate/` as parquet files so downstream notebooks run without re-fetching.
 
@@ -58,7 +58,7 @@ $$E_{c,t} = \sum_i s_{i,c,t} \cdot e_{i,c,t}$$
 
 where $s_{i,c,t}$ is sector $i$'s share of total final energy consumption (TJ) and $e_{i,c,t}$ is its electrification rate. The change decomposes exactly — without a residual — using midpoint weights:
 
-$$\Delta E = \underbrace{\sum_i \Delta s_i \cdot \bar{e}_i}_{\text{composition}} + \underbrace{\sum_i \bar{s}_i \cdot \Delta e_i}_{\text{intensity}}, \qquad \bar{s}_i = \tfrac{s_0 + s_1}{2},\; \bar{e}_i = \tfrac{e_0 + e_1}{2}$$
+$$\Delta E = \underbrace{\sum_i \Delta s_i \cdot \bar{e}_i}_{\text{composition}} + \underbrace{\sum_i \bar{s}_i \cdot \Delta e_i}_{\text{intensity}}, \qquad \bar{s}_i = \tfrac{s_0 + s_1}{2},\qquad \bar{e}_i = \tfrac{e_0 + e_1}{2}$$
 
 Two analyses:
 - **Time series** — first to last observation per country: how much of each country's gain is explained by intensity improvements vs. sectoral rebalancing?
