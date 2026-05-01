@@ -74,7 +74,8 @@ def style_ax(ax, years, step=5):
     ax.xaxis.set_major_locator(
         mticker.FixedLocator(
             range(y0 + (step - y0 % step) % step, y1 + 1, step)
-    ))
+        )
+    )
 
 
 def legend(ax, **kwargs):

@@ -32,7 +32,7 @@ parent = [
 ]
 
 subs = [
-    # Transport
+    # Industri
     'FC_IND_IS_E',      # iron and steel
     'FC_IND_CPC_E',     # chemical and petrochemical
     'FC_IND_NFM_E',     # non-ferrous metals
