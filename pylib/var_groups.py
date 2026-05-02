@@ -1,7 +1,16 @@
+"""
+Var groups — country and sector metadata for the electrification analysis
+=========================================================================
+
+Defines the country list, sector codes (total, parent, subsectors),
+Danish labels, and the NACE A64 → nrg_bal mapping used in fetch_gva.
+Used by fetches.py and all analysis notebooks.
+"""
 
 
-# ========== ========== ========== ========== ==========
-# ========== 1. Structure of electrification data
+# ==================== ==================== ==================== ====================
+# 1. Structure of electrification data
+
 countries = [
     'DK','SE',
     # 'NO',
@@ -23,11 +32,11 @@ country_names = {
     'EU27_2020': 'EU-27 gns.',
 }
 
-total = ['FC_E']        # Final consumption 
+total = ['FC_E']        # Final consumption
 
 parent = [
-    'FC_IND_E',         # Industry sector   
-    'FC_TRA_E',         # Transport sector  
+    'FC_IND_E',         # Industry sector
+    'FC_TRA_E',         # Transport sector
     'FC_OTH_E',         # Other sectors
 ]
 
@@ -95,9 +104,18 @@ labels = {
     'FC_OTH_NSP_E':  'Øvrige – ikke specificeret',
 }
 
+GREEN_SOURCES = {
+    'RA100':              'Vandkraft',
+    'RA300':              'Vind (land + hav)',
+    'RA420':              'Sol PV',
+    'N900H':              'Kernekraft',
+    'R5110-5150_W6000RI': 'Biomasse (fast + affald)',
+}
 
-# ========== ========== ========== ========== ==========
-# ========== 2. Grouping map to NACE64
+
+# ==================== ==================== ==================== ====================
+# 2. Grouping map to NACE64
+
 nace_map = {
     # Industry — FC_IND
     'FC_IND_IS_E':  [],                            # C24 split equally with NFM in fetch_gva (inseparable in A64)
@@ -138,4 +156,3 @@ nace_map = {
 
 # Reverse: nace_r2 code → nrg_bal sector
 nace_to_nrg = {nace: nrg for nrg, naces in nace_map.items() for nace in naces}
-# check how much of total NACE prod the above is catching.

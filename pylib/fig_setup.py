@@ -1,8 +1,22 @@
-# nice figures (Danish æ/ø/å-safe)
+"""
+Fig setup — matplotlib style and shared figure helpers
+======================================================
+
+Applies AEJ-style rcParams at import time. Exposes PALETTE, STYLE, LW, and
+SEC_PALETTE for country/sector coloring, and three helper functions used
+across all notebooks.
+"""
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from cycler import cycler
+
+from pylib.var_groups import country_names
+
+
+# ==================== ==================== ==================== ====================
+# 0. rcParams
 
 BASE = 9
 
@@ -37,7 +51,9 @@ mpl.rcParams.update({
     "legend.title_fontsize": BASE + 7,
 })
 
-# ── Country styling ────────────────────────────────────────────────────────────
+
+# ==================== ==================== ==================== ====================
+# 1. Colour constants
 
 PALETTE = {
     "DK":        "#E04131",
@@ -64,7 +80,8 @@ SEC_PALETTE = [
 ]
 
 
-# ── Shared helpers ─────────────────────────────────────────────────────────────
+# ==================== ==================== ==================== ====================
+# 2. Shared helpers
 
 def style_ax(ax, years, step=5):
     """Grid, tight xlim, clean x ticks."""
@@ -86,7 +103,6 @@ def legend(ax, **kwargs):
 
 def country_handles(countries):
     """Legend handles for a list of country codes."""
-    from pylib.var_groups import country_names
     return [
         plt.Line2D([0], [0], color=PALETTE[g], ls=STYLE[g], lw=LW[g],
                    label=country_names.get(g, g))
