@@ -30,6 +30,7 @@ mpl.rcParams.update({
         "URW Palladio L",
     ],
     "font.sans-serif": ["DejaVu Sans"],
+    "font.style": "italic",
     "mathtext.fontset": "dejavuserif",
     "mathtext.default": "regular",
     "text.usetex": False,
@@ -38,6 +39,15 @@ mpl.rcParams.update({
     "ps.fonttype": 42,
     "svg.fonttype": "none",
     "axes.prop_cycle": cycler(color=["#FF0000", "#374151", "#003A8C"]),
+    "axes.facecolor": "#EAF1F2",
+    "figure.facecolor": "#EAF1F2",
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    'axes.spines.left': False,
+    'axes.spines.bottom': False,
+    "axes.grid.axis": "y",
+    "grid.color": "white",
+    "grid.linewidth": 1,
 })
 
 mpl.rcParams.update({
@@ -84,8 +94,11 @@ SEC_PALETTE = [
 # 2. Shared helpers
 
 def style_ax(ax, years, step=5):
-    """Grid, tight xlim, clean x ticks."""
-    ax.grid(linewidth=0.6, alpha=0.35)
+    """Grid, tight xlim, clean x ticks, y-tick dash format."""
+    ax.grid(axis="y")
+    ax.yaxis.set_major_formatter(
+        mticker.FuncFormatter(lambda x, _: f"{x:.0f} -")
+    )
     ax.set_xlim(years.min(), years.max())
     y0, y1 = int(years.min()), int(years.max())
     ax.xaxis.set_major_locator(
@@ -97,8 +110,8 @@ def style_ax(ax, years, step=5):
 
 def legend(ax, **kwargs):
     """Framed, rounded-corner legend."""
-    return ax.legend(frameon=True, framealpha=0.95,
-                     edgecolor="0.5", fancybox=True, **kwargs)
+    defaults = dict(frameon=True, framealpha=0.95, edgecolor="0.5", fancybox=True)
+    return ax.legend(**{**defaults, **kwargs})
 
 
 def country_handles(countries):
